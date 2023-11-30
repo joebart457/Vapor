@@ -1,0 +1,41 @@
+Stack based 64 bit
+
+values
+(address points here)Hello World/0(0xget)get\0
+
+equates
+
+2 instructions
+push
+call
+
+
+equates
+stor: $stor
+get: "get"
+
+
+push 0xvalue
+push 0xaddr
+call stor
+push 0xaddr
+call 0xget
+
+
+freeloc 1
+
+
+
+call_impl:
+
+proc call_impl stdcall addr:qword
+	stdcall strcmp, [addr], [getliteral]
+	test eax, eax
+	jnz .directinvoke	
+	call get
+	.directinvoke
+	call [addr]
+	ret
+endp
+	
+
